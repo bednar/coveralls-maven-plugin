@@ -36,15 +36,15 @@ public class CoverageFixture {
 
     public static final String[][] COVERAGE_FILES_SAGA = new String[][] {
             // file                 lines   covered lines   missed lines
-            { "Localization.js",    "17",   "1,2,4,5,9,13", "6,10" },
-            { "Components.js",      "5",    "1,2",          "" }
+            {"src/Localization.js",    "17",   "1,2,4,5,9,13", "6,10" },
+            {"src/Components.js",      "5",    "1,2",          "" }
     };
 
     public static final String[][] COVERAGE_FILES_SAGA_COBERTURA = new String[][] {
             // file                         lines   covered lines           missed lines
             { "SimpleCoverage.java",        "14",   "3,6",                  "10,11" },
             { "InnerClassCoverage.java",    "30",   "3,6,9,10,12,15,18,21", "25,26"},
-            { "Localization.js",            "17",   "1,2,4,5,9,13",         "6,10" },
-            { "Components.js",              "5",    "1,2",                  "" }
+            {"src/Localization.js",            "17",   "1,2,4,5,9,13",         "6,10" },
+            {"src/Components.js",              "5",    "1,2",                  "" }
     };
 }

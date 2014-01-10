@@ -1,5 +1,7 @@
 package org.eluder.coveralls.maven.plugin.saga;
 
+import java.io.IOException;
+
 import org.apache.maven.plugin.logging.Log;
 import org.eluder.coveralls.maven.plugin.AbstractCoverallsMojo;
 import org.eluder.coveralls.maven.plugin.AbstractCoverallsMojoTest;
@@ -18,7 +20,7 @@ public class SagaMojoTest extends AbstractCoverallsMojoTest {
         SagaMojo mojo = new SagaMojo();
 
         mojo.coverageFile = TestIoUtil.getFile("/saga.xml");
-        mojo.deployedDirectoryName = "src/";
+        mojo.baseDir = "";
 
         return mojo;
     }
@@ -32,5 +34,9 @@ public class SagaMojoTest extends AbstractCoverallsMojoTest {
     protected void verifySuccesfull(final Log logMock) {
         verify(logMock).info("Gathered code coverage metrics for 2 source files with 22 lines of code:");
         verify(logMock).info("*** It might take hours for Coveralls to update the actual coverage numbers for a job");
+    }
+
+    protected String readFileContent(final String sourceFile) throws IOException {
+        return TestIoUtil.readFileContent(TestIoUtil.getFile("/" + sourceFile));
     }
 }

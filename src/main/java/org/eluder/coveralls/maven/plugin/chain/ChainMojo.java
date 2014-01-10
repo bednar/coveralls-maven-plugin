@@ -40,10 +40,10 @@ public class ChainMojo extends AbstractCoverallsMojo {
     protected File sagaFile;
 
     /**
-     * @see org.eluder.coveralls.maven.plugin.saga.SagaMojo#deployedDirectoryName
+     * @see org.eluder.coveralls.maven.plugin.saga.SagaMojo#baseDir
      */
-    @Parameter(property = "deployedDirectoryName", required = true, defaultValue = "src/")
-    protected String deployedDirectoryName;
+    @Parameter(property = "baseDir", required = true, defaultValue = "")
+    protected String baseDir;
 
     @Override
     protected CoverageParser createCoverageParser(final SourceLoader sourceLoader) {
@@ -70,7 +70,7 @@ public class ChainMojo extends AbstractCoverallsMojo {
 
             if (sagaFile != null) {
                 getLog().info("Writing from Saga report: " + sagaFile.getAbsolutePath());
-                new SagaParser(sagaFile, deployedDirectoryName, sourceLoader).parse(sourceCallback);
+                new SagaParser(sagaFile, sourceLoader).parse(sourceCallback);
             }
 
             writer.writeEnd();
@@ -79,5 +79,10 @@ public class ChainMojo extends AbstractCoverallsMojo {
         } finally {
             writer.close();
         }
+    }
+
+    @Override
+    protected SourceLoader createSourceLoader() {
+        return new SourceLoader(sourceDirectories, sourceEncoding, baseDir);
     }
 }

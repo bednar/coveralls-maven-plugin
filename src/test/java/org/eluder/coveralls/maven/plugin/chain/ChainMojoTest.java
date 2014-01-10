@@ -77,7 +77,8 @@ public class ChainMojoTest {
             @Override
             public Source answer(final InvocationOnMock invocation) throws Throwable {
                 String sourceFile = invocation.getArguments()[0].toString();
-                String content = TestIoUtil.readFileContent(TestIoUtil.getFile("/" + new File(sourceFile).getName()));
+                sourceFile = sourceFile.endsWith(".js") ? sourceFile : new File(sourceFile).getName();
+                String content = TestIoUtil.readFileContent(TestIoUtil.getFile("/" + sourceFile));
                 return new Source(invocation.getArguments()[0].toString(), content);
             }
         });
@@ -136,7 +137,7 @@ public class ChainMojoTest {
 
         mojo.coberturaFile = TestIoUtil.getFile("/cobertura.xml");
         mojo.sagaFile = TestIoUtil.getFile("/saga.xml");
-        mojo.deployedDirectoryName = "src/";
+        mojo.baseDir = "";
 
         when(coverallsClientMock.submit(any(File.class))).thenReturn(new CoverallsResponse("success", false, null));
         mojo.execute();
@@ -155,7 +156,7 @@ public class ChainMojoTest {
     public void testSuccesfullSubmissionJaCoCo() throws Exception {
 
         mojo.jacocoFile = TestIoUtil.getFile("/jacoco.xml");
-        mojo.deployedDirectoryName = "src/";
+        mojo.baseDir = "";
 
         when(coverallsClientMock.submit(any(File.class))).thenReturn(new CoverallsResponse("success", false, null));
         mojo.execute();

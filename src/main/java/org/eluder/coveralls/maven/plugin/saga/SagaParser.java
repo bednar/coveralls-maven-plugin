@@ -15,12 +15,8 @@ import org.eluder.coveralls.maven.plugin.domain.SourceLoader;
  */
 public class SagaParser extends CoberturaParser {
 
-    private final String deployedDirectoryName;
-
-    public SagaParser(final File coverageFile, final String deployedDirectoryName, final SourceLoader sourceLoader) {
+    public SagaParser(final File coverageFile, final SourceLoader sourceLoader) {
         super(coverageFile, sourceLoader);
-
-        this.deployedDirectoryName = deployedDirectoryName;
     }
 
     @Override
@@ -29,9 +25,6 @@ public class SagaParser extends CoberturaParser {
         if (isStartElement(xml, "class")) {
 
             String filename = xml.getAttributeValue(null, "filename");
-            if (filename.startsWith(deployedDirectoryName)) {
-                filename = filename.replaceFirst(deployedDirectoryName, "");
-            }
 
             source = loadSource(filename);
 
